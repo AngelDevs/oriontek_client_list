@@ -1,4 +1,4 @@
-import { Address } from "./address";
+import { Address } from "../../address/models/address";
 
 export interface Client {
   id: string;
