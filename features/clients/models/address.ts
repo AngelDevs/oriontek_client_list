@@ -3,4 +3,6 @@ export interface Address {
   suite: string;
   city: string;
   zipcode: string;
+  isMain: boolean;
+  id: string;
 }
