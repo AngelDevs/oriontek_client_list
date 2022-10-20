@@ -2,8 +2,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useGetClientsQuery } from "../features/clients/queries/useGetClientsQuery";
-import ClientsGrid from "../features/clients/ui/ClientsGrid/ClientsGrid";
+import ClientsGrid from "../features/clients/ui/layout/ClientsGrid/ClientsGrid";
 import Header from "../features/core/ui/layout/Header";
+import Loader from "../features/core/ui/layout/Loader";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const Home: NextPage = () => {
 
       <main className="p-4">
         {isLoading ? (
-          <span>Loading...</span>
+          <Loader />
         ) : (
           <ClientsGrid
             clients={data ?? []}
