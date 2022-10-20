@@ -2,34 +2,48 @@ import { Client } from "../../models/client";
 
 type Props = {
   client: Client;
+  onClick?: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    client: Client
+  ) => void;
 };
 
 const ClientCard = (props: Props) => {
-  const { client } = props;
+  const { client, onClick } = props;
+
+  const onClickCard = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (onClick) onClick(e, client);
+  };
+
+  const { id, name, email, phone, addresses } = client;
+
+  const cardClicableStyles = onClick
+    ? "active:bg-base-300/50 hover:bg-base-300/50 cursor-pointer"
+    : "";
+
   return (
-    <div className="card bg-base-300 shadow-xl break-all" key={client.id}>
+    <div
+      onClick={onClickCard}
+      className={`card bg-base-300 shadow-xl break-all ${cardClicableStyles}`}
+      key={id}
+    >
       <div className="card-body">
         <h2 className="card-title">
-          <span className="text-gradient-primary">{client.name}</span>
+          <span className="text-gradient-primary">{name}</span>
         </h2>
         <p>
-          <span>{client.addresses[0].suite}, </span>
-          <span>{client.addresses[0].street}</span>
+          <span>{addresses[0].suite}, </span>
+          <span>{addresses[0].street}</span>
           <br></br>
-          <span>{client.addresses[0].city}</span>
+          <span>{addresses[0].city}</span>
           <br></br>
-          <span>{client.addresses[0].zipcode}</span>
+          <span>{addresses[0].zipcode}</span>
         </p>
         <p>
           <span className="text-gradient-primary">Contacto:</span>
         </p>
-        <a
-          href={`mailto: ${client.email}`}
-          className="text-blue-500 hover:text-blue-400/80"
-        >
-          {client.email}
-        </a>
-        <span className="text-blue-500">Phone: {client.phone}</span>
+        <span className="text-blue-500">{email}</span>
+        <span className="text-blue-500">Phone: {phone}</span>
       </div>
     </div>
   );
