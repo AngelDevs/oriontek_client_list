@@ -1,5 +1,6 @@
 import { users } from "../../../public/users";
 import { Client } from "../models/client";
+import { getClientsLocalState } from "./clientsServices";
 
 export const getClients = () => {
   return new Promise<Client[]>((resolve, reject) => {
@@ -17,16 +18,15 @@ export const getClients = () => {
 const saveClientsLocalState = (clients: Client[]) => {
   const clientsString = JSON.stringify(clients);
   localStorage.setItem("clients", clientsString);
+  localStorage.setItem("isFirstTime", false.toString());
 };
 
 const getIsFirstTimeLocalState = () => {
   const isFirstTimeString = localStorage.getItem("isFirstTime");
-  const isFirstTime = isFirstTimeString ? Boolean(isFirstTimeString) : true;
-  return isFirstTime;
-};
 
-const getClientsLocalState = () => {
-  const clientsString = localStorage.getItem("clients");
-  const clients = clientsString ? JSON.parse(clientsString) : [];
-  return clients as Client[];
+  if (isFirstTimeString === "false") {
+    return false;
+  } else {
+    return true;
+  }
 };
